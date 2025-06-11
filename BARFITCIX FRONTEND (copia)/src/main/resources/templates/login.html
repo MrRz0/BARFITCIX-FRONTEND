@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarFitCIX - Inicio de Sesión</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card fade-in-up">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="/images/logo.jpg" alt="BarFitCIX Logo">
+                </div>
+                <div class="tagline">"Altos en Proteína, sin Azúcar Añadido"</div>
+            </div>
+            
+            <form action="/dashboard" method="get">
+                <h4 class="text-center mb-4">Inicio de sesión</h4>
+                <p class="text-center text-muted mb-4">Ingresa tus datos para iniciar sesión</p>
+                
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-person"></i>
+                        </span>
+                        <input type="text" class="form-control border-start-0" placeholder="Usuario" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-lock"></i>
+                        </span>
+                        <input type="password" class="form-control border-start-0" placeholder="Contraseña" required>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">
+                            Mantener activa mi sesión
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-accent w-100 btn-lg">
+                    <i class="bi bi-arrow-right-circle me-2"></i>
+                    Ingresar
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarFitCIX - Gestión de Platos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- Sidebar: Barra lateral de navegación -->
+    <div class="sidebar expanded" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand-container">
+                <img src="/images/logo.jpg" alt="BarFitCIX Logo" class="sidebar-logo-img">
+                <span class="sidebar-title">BarFitCIX</span>
+            </div>
+            <div class="user-info">
+                <h5>Bienvenid@</h5>
+                <small>Nombre de Usuario</small>
+            </div>
+            <button class="sidebar-toggle-btn" onclick="toggleSidebar()">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li>
+                <a href="/dashboard">
+                    <i class="bi bi-door-open"></i>
+                    <span>SALAS</span>
+                </a>
+            </li>
+            <li>
+                <a href="/historial-pedidos">
+                    <i class="bi bi-list-check"></i>
+                    <span>PEDIDOS</span>
+                </a>
+            </li>
+            <li>
+                <a href="/platos" class="active">
+                    <i class="bi bi-cup-hot"></i>
+                    <span>PLATOS</span>
+                </a>
+            </li>
+            <li>
+                <a href="/reportes">
+                    <i class="bi bi-graph-up"></i>
+                    <span>REPORTE</span>
+                </a>
+            </li>
+            <li>
+                <a href="/configuracion">
+                    <i class="bi bi-gear"></i>
+                    <span>CONFIGURACIÓN</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div class="top-header">
+            <div></div>
+            <div class="datetime-info">
+                <h2 class="current-time" id="currentTime">04:00 PM</h2>
+                <p class="current-date" id="currentDate">12 DE MAYO 2025</p>
+            </div>
+            <div class="user-actions">
+                <!-- Selector de Modo Claro/Oscuro -->
+                <div class="theme-toggle-container">
+                    <i class="bi bi-sun"></i>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="themeToggle">
+                        <label class="form-check-label visually-hidden" for="themeToggle">Modo Oscuro</label>
+                    </div>
+                    <i class="bi bi-moon"></i>
+                </div>
+                <div class="user-avatar">
+                    <i class="bi bi-person"></i>
+                </div>
+                <a href="/" class="btn btn-dark">CERRAR SESIÓN</a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-success text-white text-center">
+                            <h5 class="mb-0">NUEVO PLATO</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="platoForm">
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>NOMBRE:</strong></label>
+                                    <input type="text" class="form-control" id="nombrePlato" placeholder="Type here..." required>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label"><strong>PRECIO:</strong></label>
+                                    <input type="number" class="form-control text-center" id="precioPlato" value="0.00" step="0.10" min="0">
+                                </div>
+
+                                <!-- Sección de Tabla de Insumos -->
+                                <div class="mb-4">
+                                    <label class="form-label"><strong>INSUMOS:</strong></label>
+                                    <div class="d-flex gap-2 mb-2">
+                                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addIngredientModal">
+                                            <i class="bi bi-plus-circle me-2"></i>Agregar
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="removeSelectedIngredient()">
+                                            <i class="bi bi-trash me-2"></i>Eliminar
+                                        </button>
+                                    </div>
+                                    <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                                        <table class="table table-striped table-sm">
+                                            <thead>
+                                            <tr>
+                                                <th>Tipo</th>
+                                                <th>Cantidad</th>
+                                                <th>Unidad</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="insumosTableBody">
+                                            <!-- Insumos se añadirán aquí dinámicamente -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-2 mb-3">
+                                    <button type="submit" class="btn btn-primary flex-fill">
+                                        <i class="bi bi-floppy me-2"></i>
+                                        GUARDAR
+                                    </button>
+                                    <button type="button" class="btn btn-danger" onclick="clearPlatoForm()">
+                                        <i class="bi bi-trash me-2"></i>
+                                        ELIMINAR
+                                    </button>
+                                </div>
+
+                                <button type="button" class="btn btn-secondary w-100" onclick="clearPlatoForm()">
+                                    <i class="bi bi-plus-circle me-2"></i>
+                                    NUEVO
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                            <input type="text" class="form-control" placeholder="Search" id="searchPlatos">
+                        </div>
+                    </div>
+
+                    <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                        <table class="table table-striped">
+                            <thead class="sticky-top">
+                            <tr>
+                                <th>DESCRIPCIÓN</th>
+                                <th>PRECIO</th>
+                            </tr>
+                            </thead>
+                            <tbody id="platosTable">
+                            <tr data-name="PLATO 1" data-price="15.00">
+                                <td>PLATO 1</td>
+                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 1')">S/. 15.00</td>
+                            </tr>
+                            <tr data-name="PLATO 2" data-price="20.50">
+                                <td>PLATO 2</td>
+                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 2')">S/. 20.50</td>
+                            </tr>
+                            <tr data-name="PLATO 3" data-price="12.00">
+                                <td>PLATO 3</td>
+                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 3')">S/. 12.00</td>
+                            </tr>
+                            <tr data-name="PLATO 4" data-price="25.00">
+                                <td>PLATO 4</td>
+                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 4')">S/. 25.00</td>
+                            </tr>
+                            <tr data-name="PLATO 5" data-price="18.75">
+                                <td>PLATO 5</td>
+                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 5')">S/. 18.75</td>
+                            </tr>
+                            <tr data-name="PLATO 6" data-price="30.00">
+                                <td>PLATO 6</td>
+                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 6')">S/. 30.00</td>
+                            </tr>
+                            <tr data-name="PLATO 7" data-price="10.00">
+                                <td>PLATO 7</td>
+                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 7')">S/. 10.00</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Historial de Precios -->
+<div class="modal fade" id="priceHistoryModal" tabindex="-1" aria-labelledby="priceHistoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="priceHistoryModalLabel">Historial de Precios de <span id="productNameHistory"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Precio</th>
+                        </tr>
+                        </thead>
+                        <tbody id="priceHistoryTableBody">
+                        <!-- Historial de precios se cargará aquí -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Añadir Insumo -->
+<div class="modal fade" id="addIngredientModal" tabindex="-1" aria-labelledby="addIngredientModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addIngredientModalLabel">Añadir Insumo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="ingredientForm">
+                    <div class="mb-3">
+                        <label for="ingredientType" class="form-label">Tipo de Insumo</label>
+                        <select class="form-control" id="ingredientType" required>
+                            <option value="">Seleccionar...</option>
+                            <!-- Opciones se cargarán aquí dinámicamente desde app.js -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ingredientQuantity" class="form-label">Cantidad de Insumo</label>
+                        <input type="number" class="form-control" id="ingredientQuantity" min="0.01" step="0.01" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Unidad</label>
+                        <span id="displayIngredientUnit" class="form-control" style="background-color: var(--border-color); color: var(--text-color-light); border: 1px solid var(--border-color); pointer-events: none;"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="saveIngredient()">Guardar Insumo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

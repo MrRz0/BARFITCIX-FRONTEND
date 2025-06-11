@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarFitCIX - Configuración</title>
+    <!-- Enlace a Bootstrap CSS para estilos base -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace a Bootstrap Icons para los iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Enlace a tu archivo de estilos principal -->
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- Sidebar: Barra lateral de navegación -->
+    <div class="sidebar expanded" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand-container">
+                <img src="/images/logo.jpg" alt="BarFitCIX Logo" class="sidebar-logo-img">
+                <span class="sidebar-title">BarFitCIX</span>
+            </div>
+            <div class="user-info">
+                <h5>Bienvenid@</h5>
+                <small>Nombre de Usuario</small>
+            </div>
+            <button class="sidebar-toggle-btn" onclick="toggleSidebar()">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li>
+                <a href="/dashboard">
+                    <i class="bi bi-door-open"></i>
+                    <span>SALAS</span>
+                </a>
+            </li>
+            <li>
+                <a href="/historial-pedidos">
+                    <i class="bi bi-list-check"></i>
+                    <span>PEDIDOS</span>
+                </a>
+            </li>
+            <li>
+                <a href="/platos">
+                    <i class="bi bi-cup-hot"></i>
+                    <span>PLATOS</span>
+                </a>
+            </li>
+            <li>
+                <a href="/reportes">
+                    <i class="bi bi-graph-up"></i>
+                    <span>REPORTE</span>
+                </a>
+            </li>
+            <li>
+                <a href="/configuracion" class="active">
+                    <i class="bi bi-gear"></i>
+                    <span>CONFIGURACIÓN</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div class="top-header">
+            <div></div>
+            <div class="datetime-info">
+                <h2 class="current-time" id="currentTime">04:00 PM</h2>
+                <p class="current-date" id="currentDate">12 DE MAYO 2025</p>
+            </div>
+            <div class="user-actions">
+                <!-- Selector de Modo Claro/Oscuro -->
+                <div class="theme-toggle-container">
+                    <i class="bi bi-sun"></i> <!-- Icono de sol para modo claro -->
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="themeToggle">
+                        <label class="form-check-label visually-hidden" for="themeToggle">Modo Oscuro</label>
+                    </div>
+                    <i class="bi bi-moon"></i> <!-- Icono de luna para modo oscuro -->
+                </div>
+                <div class="user-avatar">
+                    <i class="bi bi-person"></i>
+                </div>
+                <a href="/" class="btn btn-dark">CERRAR SESIÓN</a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <!-- Navigation Tabs para Configuración -->
+            <div class="config-tabs">
+                <ul class="nav nav-tabs" id="configTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true">
+                            INFORMACIÓN
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="salas-tab" data-bs-toggle="tab" data-bs-target="#salas" type="button" role="tab" aria-controls="salas" aria-selected="false">
+                            SALAS
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="usuarios-tab" data-bs-toggle="tab" data-bs-target="#usuarios" type="button" role="tab" aria-controls="usuarios" aria-selected="false">
+                            USUARIOS
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="insumos-tab" data-bs-toggle="tab" data-bs-target="#insumos" type="button" role="tab" aria-controls="insumos" aria-selected="false">
+                            INSUMOS
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Contenido de las pestañas -->
+                <div class="tab-content" id="configTabContent">
+                    <!-- Pestaña: Información de la Empresa -->
+                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                        <h4 class="mb-4">Información de la empresa</h4>
+                        <form>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label"><strong>Nombre Comercial</strong></label>
+                                    <input type="text" class="form-control" placeholder="Type here">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label"><strong>RAZÓN SOCIAL</strong></label>
+                                    <input type="text" class="form-control" placeholder="Type here">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label"><strong>RUC</strong></label>
+                                    <input type="text" class="form-control" placeholder="Type here">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label"><strong>DIRECCIÓN</strong></label>
+                                    <input type="text" class="form-control" placeholder="Type here">
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <label class="form-label"><strong>TELÉFONO</strong></label>
+                                    <input type="text" class="form-control" placeholder="Type here">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label"><strong>CORREO ELECTRÓNICO</strong></label>
+                                    <input type="email" class="form-control" placeholder="Type here">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label"><strong>SITIO WEB</strong></label>
+                                    <input type="url" class="form-control" placeholder="Type here">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label"><strong>LOGO DE LA EMPRESA</strong></label>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="logo-preview border rounded p-3" style="width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">
+                                        <img src="/images/logo.jpg" alt="Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-primary mb-2">
+                                            <i class="bi bi-cloud-upload me-2"></i>
+                                            SUBIR LOGO
+                                        </button>
+                                        <div class="text-muted small">
+                                            FORMATOS PERMITIDOS: PNG, JPG, SVG. TAMAÑO MÁXIMO: 2MB
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-floppy me-2"></i>
+                                    GUARDAR CAMBIOS
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Pestaña: Gestión de Salas -->
+                    <div class="tab-pane fade" id="salas" role="tabpanel" aria-labelledby="salas-tab">
+                        <h4 class="mb-4">GESTIÓN DE SALAS</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <select class="form-control">
+                                        <option>SALA 1</option>
+                                        <option>SALA 2</option>
+                                        <option>SALA 3</option>
+                                        <option>SALA 4</option>
+                                        <option>SALA 5</option>
+                                        <option>SALA 6</option>
+                                    </select>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header bg-success text-white text-center">
+                                        <h5 class="mb-0">NUEVA SALA</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong>NOMBRE :</strong></label>
+                                            <input type="text" class="form-control" placeholder="Type here...">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label"><strong>MESAS:</strong></label>
+                                            <div class="input-group">
+                                                <button type="button" class="btn btn-danger">
+                                                    <i class="bi bi-dash"></i>
+                                                </button>
+                                                <input type="number" class="form-control text-center" value="0">
+                                                <button type="button" class="btn btn-success">
+                                                    <i class="bi bi-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex gap-2 mb-3">
+                                            <button class="btn btn-primary flex-fill">
+                                                <i class="bi bi-floppy me-2"></i>
+                                                GUARDAR
+                                            </button>
+                                            <button class="btn btn-danger">
+                                                <i class="bi bi-trash me-2"></i>
+                                                ELIMINAR
+                                            </button>
+                                        </div>
+                                        <button class="btn btn-secondary w-100">
+                                            <i class="bi bi-plus-circle me-2"></i>
+                                            NUEVO
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                                    <table class="table table-striped">
+                                        <thead class="sticky-top">
+                                        <tr>
+                                            <th>SALA</th>
+                                            <th>MESAS</th>
+                                            <th>ESTADO</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>SALA 1</td>
+                                            <td>10</td>
+                                            <td><input type="checkbox" checked></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SALA 2</td>
+                                            <td>10</td>
+                                            <td><input type="checkbox" checked></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SALA 3</td>
+                                            <td>10</td>
+                                            <td><input type="checkbox" checked></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SALA 4</td>
+                                            <td>10</td>
+                                            <td><input type="checkbox" checked></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SALA 5</td>
+                                            <td>10</td>
+                                            <td><input type="checkbox" checked></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SALA 6</td>
+                                            <td>10</td>
+                                            <td><input type="checkbox" checked></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SALA 7</td>
+                                            <td>5</td>
+                                            <td><input type="checkbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SALA 8</td>
+                                            <td>8</td>
+                                            <td><input type="checkbox"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pestaña: Administración de Usuarios -->
+                    <div class="tab-pane fade" id="usuarios" role="tabpanel" aria-labelledby="usuarios-tab">
+                        <div class="users-header">
+                            <h4 class="mb-0">ADMINISTRACIÓN DE USUARIOS</h4>
+                            <button class="btn new-user-btn" data-bs-toggle="modal" data-bs-target="#newUserModal">
+                                <i class="bi bi-plus-circle"></i>
+                                NUEVO USUARIO
+                            </button>
+                        </div>
+                        <div class="users-table">
+                            <table class="table table-borderless mb-0">
+                                <thead>
+                                <tr>
+                                    <th>USUARIO</th>
+                                    <th>CORREO</th>
+                                    <th>ROL</th>
+                                    <th>ESTADO</th>
+                                    <th>ACCIONES</th>
+                                </tr>
+                                </thead>
+                                <tbody id="usersTableBody">
+                                <tr>
+                                    <td><strong>ADMIN</strong></td>
+                                    <td>ADMIN@GMAIL.COM</td>
+                                    <td><span class="role-badge role-administrador">ADMINISTRADOR</span></td>
+                                    <td><span class="status-badge status-activo">ACTIVO</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-edit" onclick="editUser('ADMIN', 'admin@gmail.com', 'ADMINISTRADOR', 'ACTIVO')" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-delete" onclick="deleteUser('ADMIN')" title="Eliminar">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>USER1</strong></td>
+                                    <td>USER1@GMAIL.COM</td>
+                                    <td><span class="role-badge role-empleado">EMPLEADO</span></td>
+                                    <td><span class="status-badge status-activo">ACTIVO</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-edit" onclick="editUser('USER1', 'user1@gmail.com', 'EMPLEADO', 'ACTIVO')" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-delete" onclick="deleteUser('USER1')" title="Eliminar">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>USER2</strong></td>
+                                    <td>USER2@GMAIL.COM</td>
+                                    <td><span class="role-badge role-empleado">EMPLEADO</span></td>
+                                    <td><span class="status-badge status-activo">ACTIVO</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-edit" onclick="editUser('USER2', 'user2@gmail.com', 'EMPLEADO', 'ACTIVO')" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-delete" onclick="deleteUser('USER2')" title="Eliminar">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>USER3</strong></td>
+                                    <td>USER3@GMAIL.COM</td>
+                                    <td><span class="role-badge role-empleado">EMPLEADO</span></td>
+                                    <td><span class="status-badge status-activo">ACTIVO</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-edit" onclick="editUser('USER3', 'user3@gmail.com', 'EMPLEADO', 'ACTIVO')" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-delete" onclick="deleteUser('USER3')" title="Eliminar">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>USER4</strong></td>
+                                    <td>USER4@GMAIL.COM</td>
+                                    <td><span class="role-badge role-empleado">EMPLEADO</span></td>
+                                    <td><span class="status-badge status-inactivo">INACTIVO</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-edit" onclick="editUser('USER4', 'user4@gmail.com', 'EMPLEADO', 'INACTIVO')" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-delete" onclick="deleteUser('USER4')" title="Eliminar">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Pestaña: Gestión de Insumos -->
+                    <div class="tab-pane fade" id="insumos" role="tabpanel" aria-labelledby="insumos-tab">
+                        <div class="insumos-header d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0">ADMINISTRACIÓN DE INSUMOS</h4>
+                            <button class="btn btn-success new-insumo-btn" data-bs-toggle="modal" data-bs-target="#insumoModal">
+                                <i class="bi bi-plus-circle me-2"></i>
+                                NUEVO INSUMO
+                            </button>
+                        </div>
+
+                        <div class="insumos-table table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>NOMBRE</th>
+                                    <th>UNIDAD</th>
+                                    <th>ACCIONES</th>
+                                </tr>
+                                </thead>
+                                <tbody id="insumosManagementTableBody">
+                                <!-- Insumos se cargarán aquí dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Nuevo/Editar Usuario -->
+<div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newUserModalLabel">Nuevo Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="userForm">
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">Usuario</label>
+                        <input type="text" class="form-control" id="userName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userEmail" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="userEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userPassword" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="userPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userRole" class="form-label">Rol</label>
+                        <select class="form-control" id="userRole" required>
+                            <option value="">Seleccionar rol</option>
+                            <option value="ADMINISTRADOR">Administrador</option>
+                            <option value="EMPLEADO">Empleado</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userStatus" class="form-label">Estado</label>
+                        <select class="form-control" id="userStatus" required>
+                            <option value="ACTIVO">Activo</option>
+                            <option value="INACTIVO">Inactivo</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="saveUser()">Guardar Usuario</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Nuevo/Editar Insumo -->
+<div class="modal fade" id="insumoModal" tabindex="-1" aria-labelledby="insumoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="insumoModalLabel">Nuevo Insumo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="insumoForm">
+                    <input type="hidden" id="insumoId" value="">
+                    <div class="mb-3">
+                        <label for="insumoName" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="insumoName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="insumoUnit" class="form-label">Tipo de Unidad</label>
+                        <select class="form-control" id="insumoUnit" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="kg">Kilogramo (kg)</option>
+                            <option value="g">Gramo (g)</option>
+                            <option value="Lt">Litro (Lt)</option>
+                            <option value="ml">Mililitro (ml)</option>
+                            <option value="unidad">Unidad</option>
+                            <option value="taza">Taza</option>
+                            <option value="cucharada">Cucharada</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="saveInsumo()">Guardar Insumo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enlace a Bootstrap JS (bundle incluye Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Enlace a tu archivo de JavaScript principal -->
+<script src="/js/app.js"></script>
+</body>
+</html>
