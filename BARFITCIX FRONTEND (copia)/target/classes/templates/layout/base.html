@@ -3,23 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${title} ?: 'BarFitCIX - Sistema de Gestión'">BarFitCIX</title>
-    
-    <!-- Bootstrap 5.3 CSS -->
+    <title>BarFitCIX</title>
+    <!-- Enlace a Bootstrap CSS para estilos base -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    <!-- Enlace a Bootstrap Icons para los iconos -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Custom CSS -->
+    <!-- Enlace a tu archivo de estilos principal -->
     <link href="/css/styles.css" rel="stylesheet">
+    <!-- NO TOCAR ESTE BLOQUE, ES PARA EL SIDEEBAR QUE SE OCULTA -->
+    <style>
+        @media (min-width: 992px) {
+            .sidebar.collapsed {
+                width: 70px; /* Ancho colapsado */
+            }
+            .sidebar.collapsed .sidebar-title,
+            .sidebar.collapsed .user-info,
+            .sidebar.collapsed .sidebar-nav span {
+                display: none;
+            }
+            .sidebar.collapsed .sidebar-toggle-btn i {
+                transform: rotate(180deg);
+            }
+            .dashboard-container.sidebar-collapsed .main-content {
+                margin-left: 70px; /* Ajusta el margen del contenido principal */
+            }
+        }
+    </style>
 </head>
 <body>
-    <div th:fragment="content">
-        <!-- Content will be replaced by specific pages -->
+<!-- Tu contenido HTML principal (sidebar, header, main-content) -->
+
+<!-- Modal de Mensaje Personalizado (para reemplazar alert/confirm) -->
+<div class="modal fade" id="customMessageModal" tabindex="-1" aria-labelledby="customMessageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customMessageModalTitle">Título del Mensaje</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="customMessageModalBody">
+                Contenido del mensaje.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="customMessageModalCancelBtn">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="customMessageModalConfirmBtn">Aceptar</button>
+            </div>
+        </div>
     </div>
-    
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="/js/app.js"></script>
+</div>
+
+<!-- Enlace a Bootstrap JS (bundle incluye Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/gestion-datos.js"></script>
 </body>
 </html>

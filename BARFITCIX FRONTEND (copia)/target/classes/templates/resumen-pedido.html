@@ -81,7 +81,7 @@
                 <div class="user-avatar">
                     <i class="bi bi-person"></i>
                 </div>
-                <a href="/" class="btn btn-dark">CERRAR SESIÓN</a>
+                <button class="btn btn-dark" onclick="showCustomConfirm('Cerrar Sesión', '¿Está seguro que desea cerrar sesión?').then(confirmed => { if(confirmed) window.location.href = '/'; });">CERRAR SESIÓN</button>
             </div>
         </div>
 
@@ -91,33 +91,33 @@
             <div class="row mb-4">
                 <div class="col-md-3">
                     <label class="form-label"><strong>CLIENTE:</strong></label>
-                    <input type="text" class="form-control" value="NOMBRE APELLIDOS" readonly>
+                    <input type="text" class="form-control" id="resumenClienteNombre" readonly>
                 </div>
                 <div class="col-md-2">
                     <label class="form-label"><strong>DNI:</strong></label>
-                    <input type="text" class="form-control" value="DNI" readonly>
+                    <input type="text" class="form-control" id="resumenClienteDNI" value="DNI" readonly>
                 </div>
                 <div class="col-md-2">
                     <label class="form-label"><strong>SALA:</strong></label>
-                    <input type="text" class="form-control" value="SALA1" readonly>
+                    <input type="text" class="form-control" id="resumenSalaNombre" readonly>
                 </div>
                 <div class="col-md-2">
                     <label class="form-label"><strong>N° MESA:</strong></label>
-                    <input type="text" class="form-control" value="2" readonly>
+                    <input type="text" class="form-control" id="resumenMesaNumero" readonly>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label"><strong>FECHA Y HORA:</strong></label>
-                    <input type="text" class="form-control" value="2025-02-12 16:00:00" readonly>
+                    <input type="text" class="form-control" id="resumenFechaHora" readonly>
                 </div>
             </div>
 
             <div class="row mb-4">
                 <div class="col-md-6">
                     <label class="form-label"><strong>TOTAL A PAGAR:</strong></label>
-                    <input type="text" class="form-control fs-4 text-primary fw-bold" value="S/. 194.0" id="totalPedidoAmount" readonly>
+                    <input type="text" class="form-control fs-4 text-primary fw-bold" id="totalPedidoAmount" readonly>
                 </div>
                 <div class="col-md-6 d-flex align-items-end gap-3 flex-wrap">
-                    <button class="btn btn-primary btn-lg">
+                    <button class="btn btn-primary btn-lg" id="finalizeOrderBtn">
                         <i class="bi bi-check-circle me-2"></i>
                         FINALIZAR
                     </button>
@@ -143,35 +143,8 @@
                         <th>COMENTARIO</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>PLATO1</td>
-                        <td>1</td>
-                        <td>S/. 34.0</td>
-                        <td>S/. 34.0</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>PLATO2</td>
-                        <td>1</td>
-                        <td>S/. 78.0</td>
-                        <td>S/. 78.0</td>
-                        <td>S/CEBOLLA</td>
-                    </tr>
-                    <tr>
-                        <td>PLATO3</td>
-                        <td>2</td>
-                        <td>S/. 20.0</td>
-                        <td>S/. 40.0</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>PLATO4</td>
-                        <td>1</td>
-                        <td>S/. 42.0</td>
-                        <td>S/. 42.0</td>
-                        <td>DAR PRIORIDAD</td>
-                    </tr>
+                    <tbody id="resumenOrderItemsTableBody">
+                    <!-- Los items del pedido se cargarán aquí dinámicamente por JavaScript -->
                     </tbody>
                 </table>
             </div>
@@ -207,13 +180,17 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="processSplitPayment()">Procesar Pagos</button>
+                <button type="button" class="btn btn-primary">Procesar Pagos</button>
             </div>
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/js/app.js"></script>
+<!-- Tus archivos JavaScript generales -->
+<script src="/js/global.js"></script>
+<script src="/js/gestion-datos.js"></script>
+<!-- Script específico para esta página -->
+<script src="/js/resumen-pedido.js"></script>
 </body>
 </html>

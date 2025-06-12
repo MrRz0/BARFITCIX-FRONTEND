@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BarFitCIX - Gestión de Platos</title>
+    <title>BarFitCIX - Platos</title>
+    <!-- Enlace a Bootstrap CSS para estilos base -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace a Bootstrap Icons para los iconos -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Enlace a tu archivo de estilos principal -->
     <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
@@ -81,123 +84,115 @@
                 <div class="user-avatar">
                     <i class="bi bi-person"></i>
                 </div>
-                <a href="/" class="btn btn-dark">CERRAR SESIÓN</a>
+                <button class="btn btn-dark" onclick="showCustomConfirm('Cerrar Sesión', '¿Está seguro que desea cerrar sesión?').then(confirmed => { if(confirmed) window.location.href = '/'; });">CERRAR SESIÓN</button>
             </div>
         </div>
 
-        <div class="content-area">
+        <div class="content-area" id="platosSection">
+            <h3 class="text-center mb-4">GESTIÓN DE PLATOS</h3>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="card">
-                        <div class="card-header bg-success text-white text-center">
+                        <div class="card-header bg-primary text-white text-center" id="platoFormCardHeader">
                             <h5 class="mb-0">NUEVO PLATO</h5>
                         </div>
                         <div class="card-body">
                             <form id="platoForm">
+                                <input type="hidden" id="platoId" value="">
                                 <div class="mb-3">
                                     <label class="form-label"><strong>NOMBRE:</strong></label>
-                                    <input type="text" class="form-control" id="nombrePlato" placeholder="Type here..." required>
+                                    <input type="text" class="form-control" id="nombrePlato" placeholder="Nombre del plato..." required>
                                 </div>
-
-                                <div class="mb-4">
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>DESCRIPCIÓN:</strong></label>
+                                    <textarea class="form-control" id="descripcionPlato" rows="3" placeholder="Descripción del plato..." required></textarea>
+                                </div>
+                                <div class="mb-3">
                                     <label class="form-label"><strong>PRECIO:</strong></label>
-                                    <input type="number" class="form-control text-center" id="precioPlato" value="0.00" step="0.10" min="0">
-                                </div>
-
-                                <!-- Sección de Tabla de Insumos -->
-                                <div class="mb-4">
-                                    <label class="form-label"><strong>INSUMOS:</strong></label>
-                                    <div class="d-flex gap-2 mb-2">
-                                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addIngredientModal">
-                                            <i class="bi bi-plus-circle me-2"></i>Agregar
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="removeSelectedIngredient()">
-                                            <i class="bi bi-trash me-2"></i>Eliminar
-                                        </button>
+                                    <div class="input-group">
+                                        <span class="input-group-text">S/.</span>
+                                        <input type="number" class="form-control" id="precioPlato" value="0.00" step="0.01" min="0" required>
                                     </div>
-                                    <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
-                                        <table class="table table-striped table-sm">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>CATEGORÍA:</strong></label>
+                                    <select class="form-control" id="categoriaPlato" required>
+                                        <option value="">Seleccionar Categoría</option>
+                                        <option value="Platos Principales">Platos Principales</option>
+                                        <option value="Ensaladas">Ensaladas</option>
+                                        <option value="Bebidas">Bebidas</option>
+                                        <option value="Postres">Postres</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>INSUMOS:</strong></label>
+                                    <div class="table-responsive mb-2">
+                                        <table class="table table-sm">
                                             <thead>
                                             <tr>
                                                 <th>Tipo</th>
-                                                <th>Cantidad</th>
-                                                <th>Unidad</th>
+                                                <th>Cant.</th>
+                                                <th>Unid.</th>
                                             </tr>
                                             </thead>
                                             <tbody id="insumosTableBody">
-                                            <!-- Insumos se añadirán aquí dinámicamente -->
+                                            <!-- Insumos del plato se cargarán aquí -->
                                             </tbody>
                                         </table>
                                     </div>
+                                    <div class="insumo-actions d-flex gap-2">
+                                        <button type="button" class="btn btn-sm btn-success flex-fill" data-bs-toggle="modal" data-bs-target="#addIngredientModal">
+                                            <i class="bi bi-plus-circle me-1"></i>
+                                            AGREGAR
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger flex-fill">
+                                            <i class="bi bi-trash me-1"></i>
+                                            ELIMINAR SELECCIONADO
+                                        </button>
+                                    </div>
                                 </div>
-
-                                <div class="d-flex gap-2 mb-3">
+                                <hr>
+                                <div class="d-flex gap-2">
                                     <button type="submit" class="btn btn-primary flex-fill">
                                         <i class="bi bi-floppy me-2"></i>
-                                        GUARDAR
+                                        GUARDAR PLATO
                                     </button>
-                                    <button type="button" class="btn btn-danger" onclick="clearPlatoForm()">
+                                    <button type="button" class="btn btn-danger" onclick="deletePlatoFormBtnAction()">
                                         <i class="bi bi-trash me-2"></i>
-                                        ELIMINAR
+                                        ELIMINAR PLATO
                                     </button>
                                 </div>
-
-                                <button type="button" class="btn btn-secondary w-100" onclick="clearPlatoForm()">
+                                <button type="button" class="btn btn-secondary w-100 mt-2" onclick="clearPlatoForm()">
                                     <i class="bi bi-plus-circle me-2"></i>
-                                    NUEVO
+                                    NUEVO PLATO
                                 </button>
                             </form>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="mb-3">
                         <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="bi bi-search"></i>
-                                </span>
-                            <input type="text" class="form-control" placeholder="Search" id="searchPlatos">
+                            <span class="input-group-text">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Buscar plato..." id="searchPlatos">
                         </div>
                     </div>
-
-                    <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
-                        <table class="table table-striped">
-                            <thead class="sticky-top">
+                    <div class="table-responsive" style="max-height: 600px; overflow-y: auto;">
+                        <table class="table table-striped table-hover" id="platosTable">
+                            <thead>
                             <tr>
+                                <th>ID</th>
+                                <th>PLATO</th>
                                 <th>DESCRIPCIÓN</th>
                                 <th>PRECIO</th>
+                                <th>CATEGORÍA</th>
+                                <th>ACCIONES</th>
                             </tr>
                             </thead>
-                            <tbody id="platosTable">
-                            <tr data-name="PLATO 1" data-price="15.00">
-                                <td>PLATO 1</td>
-                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 1')">S/. 15.00</td>
-                            </tr>
-                            <tr data-name="PLATO 2" data-price="20.50">
-                                <td>PLATO 2</td>
-                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 2')">S/. 20.50</td>
-                            </tr>
-                            <tr data-name="PLATO 3" data-price="12.00">
-                                <td>PLATO 3</td>
-                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 3')">S/. 12.00</td>
-                            </tr>
-                            <tr data-name="PLATO 4" data-price="25.00">
-                                <td>PLATO 4</td>
-                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 4')">S/. 25.00</td>
-                            </tr>
-                            <tr data-name="PLATO 5" data-price="18.75">
-                                <td>PLATO 5</td>
-                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 5')">S/. 18.75</td>
-                            </tr>
-                            <tr data-name="PLATO 6" data-price="30.00">
-                                <td>PLATO 6</td>
-                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 6')">S/. 30.00</td>
-                            </tr>
-                            <tr data-name="PLATO 7" data-price="10.00">
-                                <td>PLATO 7</td>
-                                <td class="price-cell" onclick="showPriceHistoryModal('PLATO 7')">S/. 10.00</td>
-                            </tr>
+                            <tbody id="platosTableBody">
+                            <!-- Los platos se cargarán aquí dinámicamente por JavaScript -->
                             </tbody>
                         </table>
                     </div>
@@ -207,7 +202,40 @@
     </div>
 </div>
 
-<!-- Modal de Historial de Precios -->
+<!-- Modal para Añadir Insumo a un Plato -->
+<div class="modal fade" id="addIngredientModal" tabindex="-1" aria-labelledby="addIngredientModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addIngredientModalLabel">Añadir Insumo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="ingredientForm">
+                    <div class="mb-3">
+                        <label for="ingredientType" class="form-label">Tipo de Insumo</label>
+                        <select class="form-control" id="ingredientType" required>
+                            <!-- Opciones se cargarán dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ingredientQuantity" class="form-label">Cantidad</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="ingredientQuantity" step="0.01" min="0.01" required>
+                            <span class="input-group-text" id="displayIngredientUnit"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="saveIngredient()">Guardar Insumo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Historial de Precios -->
 <div class="modal fade" id="priceHistoryModal" tabindex="-1" aria-labelledby="priceHistoryModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -237,42 +265,12 @@
     </div>
 </div>
 
-<!-- Modal de Añadir Insumo -->
-<div class="modal fade" id="addIngredientModal" tabindex="-1" aria-labelledby="addIngredientModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addIngredientModalLabel">Añadir Insumo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="ingredientForm">
-                    <div class="mb-3">
-                        <label for="ingredientType" class="form-label">Tipo de Insumo</label>
-                        <select class="form-control" id="ingredientType" required>
-                            <option value="">Seleccionar...</option>
-                            <!-- Opciones se cargarán aquí dinámicamente desde app.js -->
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ingredientQuantity" class="form-label">Cantidad de Insumo</label>
-                        <input type="number" class="form-control" id="ingredientQuantity" min="0.01" step="0.01" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Unidad</label>
-                        <span id="displayIngredientUnit" class="form-control" style="background-color: var(--border-color); color: var(--text-color-light); border: 1px solid var(--border-color); pointer-events: none;"></span>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" onclick="saveIngredient()">Guardar Insumo</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+<!-- Enlace a Bootstrap JS (bundle incluye Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/js/app.js"></script>
+<!-- Tus archivos JavaScript generales -->
+<script src="/js/global.js"></script>
+<script src="/js/gestion-datos.js"></script>
+<!-- Script específico para esta página -->
+<script src="/js/platos.js"></script>
 </body>
 </html>
